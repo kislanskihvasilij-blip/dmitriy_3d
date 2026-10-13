@@ -24,10 +24,16 @@
 .viewport { position: relative; justify-self: end; width: 100%; max-width: 600px; aspect-ratio: 1; margin: 0; }
 .js.is-loaded .viewport[data-intro] { animation-name: scale-in-fade; animation-duration: 1.6s; }
 .viewport__stage { position: absolute; inset: 0; }
-.viewport__stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; opacity: 0; transition: opacity 1.2s; }
-.viewport__stage.is-ready canvas { opacity: 1; }
-.viewport__fallback { position: absolute; left: 50%; top: 50%; translate: -54% -50%; font-size: clamp(11rem, 7rem + 13vw, 19rem); transition: opacity .8s; animation: tile-float 7s ease-in-out infinite; }
-.viewport__stage.is-ready .viewport__fallback { opacity: 0; }
+/* Мягкая тень-«пол» под шестернями: статичный градиент вместо filter на анимированном SVG */
+.viewport__stage::before {
+  content: ""; position: absolute; left: 14%; right: 10%; bottom: 9%; height: 16%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, .6), transparent); pointer-events: none;
+}
+.gears {
+  position: absolute; inset: 5% 4% 8%; width: 92%; height: 87%; overflow: visible;
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .6s var(--ease-out);
+}
 .viewport:not(.is-live) .hud { display: none; }
 .viewport__corner { position: absolute; width: 22px; height: 22px; border: 0 solid var(--line-strong); pointer-events: none; }
 .viewport__corner--tl { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
