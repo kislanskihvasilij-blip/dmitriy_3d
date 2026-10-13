@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>BREEZE 3D — реверс-инжиниринг, 3D-моделирование и 3D-печать | Дмитрий Брижак</title>
+  <meta name="description" content="Восстановлю сломанную деталь по образцу, построю 3D-модель и напечатаю на 3D-принтере. Реверс-инжиниринг, 3D-моделирование и 3D-печать на заказ. Заказ в MAX и Telegram.">
+  <meta name="theme-color" content="#011508">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="BREEZE 3D — реверс-инжиниринг и 3D-печать">
+  <meta property="og:description" content="Сломалась деталь? Сделаем новую: обмеры, 3D-модель, печать.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23011508'/%3E%3Ctext x='32' y='42' font-family='Arial Black,sans-serif' font-style='italic' font-weight='900' font-size='26' text-anchor='middle' fill='%2338f9d7'%3E3D%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Шрифты брендбука BREEZE: Anybody (логотип), Alumni Sans (текст); «Домофонт» заменён на Tektur -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,300..900;1,300..900&family=Anybody:ital,wdth,wght@1,75..125,700..900&family=Tektur:wght@400..700&display=swap">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#top">Перейти к содержимому</a>
+
+  <header class="nav" data-nav>
+    <a class="logo" href="#top" aria-label="BREEZE 3D — наверх"><span>BREEZE</span><b>3D</b></a>
+    <nav class="nav__links" aria-label="Разделы сайта">
+      <a href="#reverse">Реверс</a>
+      <a href="#services">Услуги</a>
+      <a href="#request">Заявка</a>
+      <a href="#master">О мастере</a>
+    </nav>
+    <a class="btn btn--light btn--sm" href="#contact"><span>Заказать</span></a>
+  </header>
+
+  <main id="top" tabindex="-1">
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <span class="hero__streak" aria-hidden="true"></span>
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <a class="pill" href="#reverse" data-intro="1">
+            <span class="pill__dot" aria-hidden="true"></span>
+            Реверс-инжиниринг деталей
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </a>
+          <h1 id="hero-title" class="hero__title" data-intro="2">
+            <span class="grad">Сломалась деталь?</span>
+            <span class="accent">Сделаем новую</span>
+          </h1>
+          <p class="hero__lead" data-intro="3">Реверс-инжиниринг, 3D-моделирование и 3D-печать на заказ. По образцу, обломкам, чертежу или фото — от точной модели до готовой детали в руках.</p>
+          <div class="hero__cta" data-intro="4">
+            <a class="btn btn--light" href="https://web.max.ru/" target="_blank" rel="noopener" data-max>
+              <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c5 0 9 3.6 9 8s-4 8-9 8c-1 0-2-.1-2.9-.4L4 20.5l1.4-4A7.6 7.6 0 0 1 3 11c0-4.4 4-8 9-8Z"/></svg>
+              <span>Рассчитать в MAX</span>
+            </a>
+            <a class="btn btn--glass" href="https://t.me/jacquesbreeze" target="_blank" rel="noopener">
+              <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 4.2 2.9 11.4c-1 .4-1 1.5 0 1.8l4.6 1.4 1.8 5.5c.2.7 1.1.9 1.6.4l2.6-2.4 4.8 3.5c.6.4 1.4.1 1.6-.6l3.2-15c.2-1-.7-1.7-1.6-1.4ZM9.4 14.4l8.3-6.9-6.6 8.1-.3 3.2-1.4-4.4Z"/></svg>
+              <span>Telegram</span>
+            </a>
+          </div>
+          <p class="hero__meta" data-intro="5"><span>Реверс</span><i aria-hidden="true">/</i><span>Моделирование</span><i aria-hidden="true">/</i><span>Печать</span></p>
+        </div>
+
+        <figure class="viewport" data-intro="3" aria-label="Анимация: облако точек превращается в 3D-модель шестерни">
+          <div class="viewport__stage" data-scene>
+            <!-- Запасная картинка, пока грузится WebGL (или если он недоступен) -->
+            <svg class="viewport__fallback" viewBox="-120 -120 240 240" aria-hidden="true">
+              <circle r="92" /><circle r="70" /><circle r="22" />
+              <circle cx="46" r="9" /><circle cx="-46" r="9" /><circle cy="46" r="9" /><circle cy="-46" r="9" />
+              <path d="M-110 0H110M0-110V110" />
+            </svg>
+          </div>
+          <span class="viewport__corner viewport__corner--tl" aria-hidden="true"></span>
+          <span class="viewport__corner viewport__corner--tr" aria-hidden="true"></span>
+          <span class="viewport__corner viewport__corner--bl" aria-hidden="true"></span>
+          <span class="viewport__corner viewport__corner--br" aria-hidden="true"></span>
+          <figcaption class="hud" aria-hidden="true">
+            <span class="hud__live"><i></i>Реверс в процессе</span>
+            <span class="hud__row"><span data-scan-stage>Облако точек</span><b data-scan-value>0%</b></span>
+            <span class="hud__meter"><i data-scan-bar></i></span>
+          </figcaption>
+          <span class="hud__tag hud__tag--top" aria-hidden="true">ВИД: ИЗОМЕТРИЯ</span>
+          <span class="hud__tag hud__tag--side" aria-hidden="true">ЕД.: ММ</span>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ РЕВЕРС-ИНЖИНИРИНГ ============ -->
+    <section class="section reverse" id="reverse" aria-labelledby="reverse-title" data-section>
+      <span class="divider" aria-hidden="true"></span>
+      <span class="grid-bg" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-head section-head--center" data-reveal>
+          <span class="tile" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M8 10h32v8H8zM14 18v20M22 18v12M8 14h-2M40 14h2"/><path d="M14 38l-3 4M14 38l3 4"/></svg>
+          </span>
+          <p class="eyebrow">Главное направление</p>
+          <h2 id="reverse-title" class="title"><span class="grad">Реверс-инжиниринг</span> <span class="accent">по образцу</span></h2>
+          <p class="section-head__lead">Нет чертежа и негде купить запчасть? По сохранившемуся образцу — даже сломанному или изношенному — восстановлю геометрию, построю точную 3D-модель и напечатаю новую деталь.</p>
+        </div>
+
+        <div class="steps" data-reveal>
+          <div class="steps__tabs" role="tablist" aria-label="Этапы реверс-инжиниринга" data-tabs="steps">
+            <span class="steps__indicator" aria-hidden="true"></span>
+            <button class="step-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="step-panel" data-step="0">
+              <span class="step-tab__icon"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/><path d="M9 7V4h6v3"/></svg></span><span>Образец</span>
+            </button>
+            <button class="step-tab" type="button" role="tab" aria-selected="false" aria-controls="step-panel" data-step="1" tabindex="-1">
+              <span class="step-tab__icon"><svg viewBox="0 0 24 24"><path d="M3 8h18v5H3z"/><path d="M7 13v7M11 13v4"/></svg></span><span>Обмеры</span>
+            </button>
+            <button class="step-tab" type="button" role="tab" aria-selected="false" aria-controls="step-panel" data-step="2" tabindex="-1">
+              <span class="step-tab__icon"><svg viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg></span><span>3D-модель</span>
+            </button>
+            <button class="step-tab" type="button" role="tab" aria-selected="false" aria-controls="step-panel" data-step="3" tabindex="-1">
+              <span class="step-tab__icon"><svg viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M12 10v5M8 20h8l-2-5h-4z"/></svg></span><span>Проба</span>
+            </button>
+            <button class="step-tab" type="button" role="tab" aria-selected="false" aria-controls="step-panel" data-step="4" tabindex="-1">
+              <span class="step-tab__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span><span>Деталь</span>
+            </button>
+          </div>
+
+          <div class="console" id="step-panel" role="tabpanel" aria-live="polite">
+            <div class="console__bar">
+              <span class="console__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="console__file" data-step-file>01-obrazec.log</span>
+              <span class="console__status"><i aria-hidden="true"></i>шаг <b data-step-num>1</b> из 5</span>
+            </div>
+            <ol class="console__lines" data-step-lines></ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ УСЛУГИ ============ -->
+    <section class="section services" id="services" aria-labelledby="services-title" data-section>
+      <span class="divider" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Услуги</p>
+          <h2 id="services-title" class="title"><span class="grad">От идеи</span> <span class="accent">до детали</span></h2>
+        </div>
+        <div class="features" data-stagger>
+          <article class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 8h18v5H3z"/><path d="M7 13v7M11 13v4M15 13v2"/></svg></span>
+            <h3>Реверс-инжиниринг</h3>
+            <p>Восстановлю деталь по образцу или обломкам: сниму размеры, учту износ и посадочные места, построю модель и напечатаю замену.</p>
+          </article>
+          <article class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg></span>
+            <h3>3D-моделирование</h3>
+            <p>Модель по чертежу, эскизу, фото или описанию — для 3D-печати, прототипов и производства.</p>
+          </article>
+          <article class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h14v6H5z"/><path d="M12 10v5M8 20h8l-2-5h-4z"/></svg></span>
+            <h3>3D-печать на заказ</h3>
+            <p>Печать по вашей готовой модели или по моей: прототипы, корпуса, запчасти и функциональные детали.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="marquee" aria-label="Примеры деталей, которые можно восстановить" data-reveal>
+        <p class="marquee__label">Что можно восстановить</p>
+        <div class="marquee__viewport">
+          <ul class="marquee__track" data-marquee>
+            <li>Шестерни</li><li>Кронштейны</li><li>Крышки</li><li>Ручки</li><li>Клипсы и защёлки</li>
+            <li>Корпуса</li><li>Заглушки</li><li>Держатели</li><li>Втулки</li><li>Переходники</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ЗАЯВКА ============ -->
+    <section class="section request" id="request" aria-labelledby="request-title" data-section>
+      <span class="divider" aria-hidden="true"></span>
+      <div class="container request__grid">
+        <div class="section-head" data-reveal>
+          <span class="tile tile--sm" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M12 6h18l8 8v28H12z"/><path d="M30 6v8h8M18 24h14M18 30h14M18 36h8"/></svg>
+          </span>
+          <p class="eyebrow">Заявка</p>
+          <h2 id="request-title" class="title"><span class="grad">Что прислать</span> <span class="accent">для расчёта</span></h2>
+          <p class="section-head__lead">Чем больше данных, тем точнее оценка. Скопируйте шаблон, заполните и отправьте в MAX или Telegram.</p>
+          <div class="request__buttons">
+            <a class="btn btn--light" href="https://web.max.ru/" target="_blank" rel="noopener" data-max><span>Отправить в MAX</span></a>
+            <a class="btn btn--glass" href="https://t.me/jacquesbreeze" target="_blank" rel="noopener"><span>Отправить в Telegram</span></a>
+          </div>
+        </div>
+
+        <div class="console console--template" data-reveal>
+          <div class="console__bar">
+            <div class="console__tabs" role="tablist" aria-label="Шаблоны заявки" data-tabs="templates">
+              <button class="console__tab is-active" type="button" role="tab" aria-selected="true" aria-controls="template-panel" data-template="reverse">Реверс</button>
+              <button class="console__tab" type="button" role="tab" aria-selected="false" aria-controls="template-panel" data-template="model" tabindex="-1">Моделирование</button>
+              <button class="console__tab" type="button" role="tab" aria-selected="false" aria-controls="template-panel" data-template="print" tabindex="-1">Печать</button>
+            </div>
+            <button class="console__copy" type="button" data-copy-template>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>
+              <span>Скопировать</span>
+            </button>
+          </div>
+          <pre class="console__code" id="template-panel" role="tabpanel" data-template-body></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ О МАСТЕРЕ ============ -->
+    <section class="section master" id="master" aria-labelledby="master-title" data-section>
+      <span class="divider" aria-hidden="true"></span>
+      <div class="container master__grid">
+        <div class="master__photo" data-reveal>
+          <img class="master__torus" src="assets/img/chrome-torus.webp" alt="" width="900" height="900" loading="lazy">
+          <img class="master__img" src="assets/img/dmitry.webp" alt="Дмитрий Брижак" width="1000" height="1500" loading="lazy">
+        </div>
+        <div class="master__text" data-reveal>
+          <p class="eyebrow">О мастере</p>
+          <h2 id="master-title" class="title"><span class="grad">Дмитрий</span> <span class="accent">Брижак</span></h2>
+          <p>Я дизайнер и автор бренда BREEZE DESIGN, а ещё моделирую и печатаю детали на 3D-принтере — от восстановления сломанных запчастей до прототипов новых изделий.</p>
+          <p>Дизайнерский взгляд помогает делать детали не только точными, но и аккуратными. Общаемся напрямую — без посредников и менеджеров.</p>
+          <ul class="master__facts">
+            <li><b>1</b><span>человек отвечает<br>за весь процесс</span></li>
+            <li><b>3 в 1</b><span>реверс, модель<br>и печать</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="section cta" id="contact" aria-labelledby="cta-title" data-section>
+      <span class="divider" aria-hidden="true"></span>
+      <span class="grid-bg grid-bg--cta" aria-hidden="true"></span>
+      <div class="container cta__inner" data-reveal>
+        <span class="tile tile--chrome" aria-hidden="true"><img src="assets/img/chrome-blob.webp" alt="" width="500" height="500" loading="lazy"></span>
+        <h2 id="cta-title" class="title title--xl"><span class="grad">Пришлите фото детали —</span> <span class="accent">обсудим решение</span></h2>
+        <p class="cta__lead">Отвечу, можно ли восстановить деталь, и предложу вариант изготовления.</p>
+        <p class="cta__live"><i aria-hidden="true"></i>На связи в MAX и Telegram</p>
+        <div class="cta__buttons">
+          <a class="btn btn--light btn--lg" href="https://web.max.ru/" target="_blank" rel="noopener" data-max>
+            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c5 0 9 3.6 9 8s-4 8-9 8c-1 0-2-.1-2.9-.4L4 20.5l1.4-4A7.6 7.6 0 0 1 3 11c0-4.4 4-8 9-8Z"/></svg>
+            <span class="btn__stack"><small>MAX</small>+7 918 289-89-56</span>
+          </a>
+          <a class="btn btn--glass btn--lg" href="https://t.me/jacquesbreeze" target="_blank" rel="noopener">
+            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 4.2 2.9 11.4c-1 .4-1 1.5 0 1.8l4.6 1.4 1.8 5.5c.2.7 1.1.9 1.6.4l2.6-2.4 4.8 3.5c.6.4 1.4.1 1.6-.6l3.2-15c.2-1-.7-1.7-1.6-1.4ZM9.4 14.4l8.3-6.9-6.6 8.1-.3 3.2-1.4-4.4Z"/></svg>
+            <span class="btn__stack"><small>Telegram</small>@jacquesbreeze</span>
+          </a>
+        </div>
+        <p class="cta__phone">Телефон: <a href="tel:+79182898956">+7 918 289-89-56</a> <button class="link-btn" type="button" data-copy="+79182898956">скопировать</button></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a class="logo" href="#top" aria-label="BREEZE 3D — наверх"><span>BREEZE</span><b>3D</b></a>
+      <p>© 2026 Дмитрий Брижак · Реверс-инжиниринг, моделирование и 3D-печать</p>
+      <nav class="footer__links" aria-label="Контакты">
+        <a href="https://web.max.ru/" target="_blank" rel="noopener" data-max>MAX</a>
+        <a href="https://t.me/jacquesbreeze" target="_blank" rel="noopener">Telegram</a>
+        <a href="#top">Наверх ↑</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="dock" data-dock>
+    <a class="dock__btn dock__btn--max" href="https://web.max.ru/" target="_blank" rel="noopener" data-max>MAX</a>
+    <a class="dock__btn" href="https://t.me/jacquesbreeze" target="_blank" rel="noopener">Telegram</a>
+  </div>
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+
+  <script src="assets/js/main.js" defer></script>
+  <script type="module" src="assets/js/scene.js"></script>
+</body>
+</html>
