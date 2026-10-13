@@ -122,8 +122,36 @@ button { font: inherit; color: inherit; }
 .tile::before { content: ""; position: absolute; inset: 1px; border-radius: inherit; background: radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, .22), transparent 55%); pointer-events: none; }
 .tile svg { width: 52%; height: 52%; fill: none; stroke: var(--aqua); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 8px rgba(56, 249, 215, .6)); }
 .tile--sm { width: 76px; height: 76px; border-radius: 22px; }
-.tile--chrome { width: 112px; height: 112px; }
-.tile--chrome img { width: 80%; height: auto; filter: drop-shadow(0 10px 20px rgba(0, 0, 0, .5)); }
+.tile--logo { width: 112px; height: 112px; }
+.tile--logo .d3 { font-size: 72px; translate: -3px -2px; }
+
+/* ---------- Объёмная буква D (CSS): выдавленные слои + градиентный торец + блик ---------- */
+.d3 {
+  position: relative; display: inline-block; padding-right: .1em;
+  font-family: var(--f-logo); font-style: italic; font-weight: 900; line-height: .9; color: transparent;
+  filter: drop-shadow(0 .07em .08em rgba(0, 0, 0, .6));
+}
+.d3::before, .d3::after { content: "D"; position: absolute; inset: 0; padding-right: inherit; }
+/* «Бок» буквы: стопка смещённых копий от светлой к тёмной */
+.d3::before {
+  color: #0e4a2b;
+  text-shadow:
+    .008em .008em 0 #12603a, .016em .016em 0 #115a36, .024em .024em 0 #105432, .032em .032em 0 #0f4e2f,
+    .04em .04em 0 #0e482b, .048em .048em 0 #0d4228, .056em .056em 0 #0b3c24, .064em .064em 0 #0a3621,
+    .072em .072em 0 #09301d, .08em .08em 0 #072a1a, .088em .088em 0 #062416;
+}
+/* Торец: фирменный градиент + пробегающий блик */
+.d3::after {
+  color: transparent;
+  background:
+    linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .85) 48%, transparent 60%) no-repeat,
+    linear-gradient(135deg, var(--mint) 0%, var(--aqua) 32%, var(--green) 68%, #1aa35a 100%);
+  background-size: 260% 100%, 100% 100%;
+  background-position: 130% 0, 0 0;
+  -webkit-background-clip: text; background-clip: text;
+  animation: d3-shine 5.5s ease-in-out infinite;
+}
+@keyframes d3-shine { 0%, 55% { background-position: 130% 0, 0 0; } 100% { background-position: -40% 0, 0 0; } }
 
 /* ---------- Разделитель секций: линия со светом из центра ---------- */
 .divider {
@@ -181,7 +209,7 @@ button { font: inherit; color: inherit; }
 .dock__btn { flex: 1; display: grid; place-items: center; min-height: 50px; border-radius: 14px; font-family: var(--f-tech); font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; color: var(--mint); box-shadow: 0 0 0 1px var(--line-strong) inset; }
 .dock__btn--max { background: var(--mint); color: var(--ink); box-shadow: none; }
 .toast {
-  position: fixed; left: 50%; bottom: 96px; z-index: 120; max-width: min(92vw, 460px);
+  position: fixed; left: 50%; bottom: 96px; z-index: 120; width: max-content; max-width: min(92vw, 460px);
   padding: 14px 20px; border-radius: 16px; background: var(--surface-2); color: var(--mint);
   font-size: 19px; line-height: 1.15; text-align: center;
   box-shadow: 0 0 0 1px var(--line-strong) inset, 0 20px 50px -10px #000;

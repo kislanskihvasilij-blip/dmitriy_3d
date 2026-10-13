@@ -118,7 +118,7 @@
     const area = document.createElement('textarea');
     area.value = text;
     area.setAttribute('readonly', '');
-    area.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+    area.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none;font-size:16px'; // <16px — iOS зумит страницу
     document.body.appendChild(area);
     area.select();
     area.setSelectionRange(0, text.length); // iOS Safari игнорирует select() у readonly-поля
@@ -250,6 +250,7 @@
     tabs.forEach((tab, index) => {
       tab.addEventListener('click', () => select(index, { user: true }));
       tab.addEventListener('keydown', (event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return; // не мешаем Alt+← «Назад»
         const keys = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: tabs.length - 1 };
         if (!(event.key in keys)) return;
         event.preventDefault();
@@ -282,26 +283,40 @@
   function initSteps() {
     const tablist = document.querySelector('[data-tabs="steps"]');
     if (!tablist) return;
+    const steps = tablist.closest('.steps');
     let current = 0;
     let autoplayTimer = 0;
     let userTookOver = false;
+    let inView = false;
+    let hovered = false;
+
+    // Автопрокрутка идёт, только пока блок на экране и его не трогают (WCAG 2.2.2)
+    const syncAutoplay = () => {
+      clearInterval(autoplayTimer);
+      if (!inView || hovered || userTookOver) return;
+      autoplayTimer = setInterval(() => tabs.select((current + 1) % tabs.count), STEP_AUTOPLAY_MS);
+    };
 
     const tabs = setupTabs(tablist, (index, _tab, user) => {
       current = index;
       renderStep(index);
       if (user) {
         userTookOver = true;
-        clearInterval(autoplayTimer);
+        syncAutoplay();
       }
     });
     tabs.select(0);
 
     if (prefersReducedMotion || !('IntersectionObserver' in window)) return;
+    const setHovered = (value) => () => { hovered = value; syncAutoplay(); };
+    steps.addEventListener('pointerenter', setHovered(true));
+    steps.addEventListener('pointerleave', setHovered(false));
+    steps.addEventListener('focusin', setHovered(true));
+    steps.addEventListener('focusout', setHovered(false));
     new IntersectionObserver(([entry]) => {
-      clearInterval(autoplayTimer);
-      if (!entry.isIntersecting || userTookOver) return;
-      autoplayTimer = setInterval(() => tabs.select((current + 1) % tabs.count), STEP_AUTOPLAY_MS);
-    }, { threshold: 0.4 }).observe(tablist.closest('.steps'));
+      inView = entry.isIntersecting;
+      syncAutoplay();
+    }, { threshold: 0.4 }).observe(steps);
   }
 
   /* ---------- Шаблоны заявки ---------- */

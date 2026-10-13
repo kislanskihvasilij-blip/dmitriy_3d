@@ -16,14 +16,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,300..900;1,300..900&family=Anybody:ital,wdth,wght@1,75..125,700..900&family=Tektur:wght@400..700&display=swap">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/sections.css">
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-      }
-    }
-  </script>
+  <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
   <a class="skip" href="#top">Перейти к содержимому</a>
@@ -68,26 +61,22 @@
           <p class="hero__meta" data-intro="5"><span>Реверс</span><i aria-hidden="true">/</i><span>Моделирование</span><i aria-hidden="true">/</i><span>Печать</span></p>
         </div>
 
-        <figure class="viewport" data-intro="3" aria-label="Анимация: облако точек превращается в 3D-модель шестерни">
+        <figure class="viewport" data-intro="3" aria-label="Анимация: облако точек превращается в объёмную букву D — логотип BREEZE 3D">
           <div class="viewport__stage" data-scene>
-            <!-- Запасная картинка, пока грузится WebGL (или если он недоступен) -->
-            <svg class="viewport__fallback" viewBox="-120 -120 240 240" aria-hidden="true">
-              <circle r="92" /><circle r="70" /><circle r="22" />
-              <circle cx="46" r="9" /><circle cx="-46" r="9" /><circle cy="46" r="9" /><circle cy="-46" r="9" />
-              <path d="M-110 0H110M0-110V110" />
-            </svg>
+            <!-- Пока грузится WebGL (или если он недоступен) — объёмная D на CSS -->
+            <span class="d3 viewport__fallback" aria-hidden="true">D</span>
           </div>
           <span class="viewport__corner viewport__corner--tl" aria-hidden="true"></span>
           <span class="viewport__corner viewport__corner--tr" aria-hidden="true"></span>
           <span class="viewport__corner viewport__corner--bl" aria-hidden="true"></span>
           <span class="viewport__corner viewport__corner--br" aria-hidden="true"></span>
+          <span class="hud__tag hud__tag--top" aria-hidden="true">ВИД: ИЗОМЕТРИЯ</span>
+          <span class="hud__tag hud__tag--side" aria-hidden="true">ЕД.: ММ</span>
           <figcaption class="hud" aria-hidden="true">
             <span class="hud__live"><i></i>Реверс в процессе</span>
             <span class="hud__row"><span data-scan-stage>Облако точек</span><b data-scan-value>0%</b></span>
             <span class="hud__meter"><i data-scan-bar></i></span>
           </figcaption>
-          <span class="hud__tag hud__tag--top" aria-hidden="true">ВИД: ИЗОМЕТРИЯ</span>
-          <span class="hud__tag hud__tag--side" aria-hidden="true">ЕД.: ММ</span>
         </figure>
       </div>
     </section>
@@ -126,7 +115,7 @@
             </button>
           </div>
 
-          <div class="console" id="step-panel" role="tabpanel" aria-live="polite">
+          <div class="console" id="step-panel" role="tabpanel">
             <div class="console__bar">
               <span class="console__dots" aria-hidden="true"><i></i><i></i><i></i></span>
               <span class="console__file" data-step-file>01-obrazec.log</span>
@@ -165,7 +154,7 @@
         </div>
       </div>
 
-      <div class="marquee" aria-label="Примеры деталей, которые можно восстановить" data-reveal>
+      <div class="marquee" role="group" aria-label="Примеры деталей, которые можно восстановить" data-reveal>
         <p class="marquee__label">Что можно восстановить</p>
         <div class="marquee__viewport">
           <ul class="marquee__track" data-marquee>
@@ -215,7 +204,7 @@
       <span class="divider" aria-hidden="true"></span>
       <div class="container master__grid">
         <div class="master__photo" data-reveal>
-          <img class="master__torus" src="assets/img/chrome-torus.webp" alt="" width="900" height="900" loading="lazy">
+          <span class="d3 master__d" aria-hidden="true">D</span>
           <img class="master__img" src="assets/img/dmitry.webp" alt="Дмитрий Брижак" width="1000" height="1500" loading="lazy">
         </div>
         <div class="master__text" data-reveal>
@@ -236,7 +225,7 @@
       <span class="divider" aria-hidden="true"></span>
       <span class="grid-bg grid-bg--cta" aria-hidden="true"></span>
       <div class="container cta__inner" data-reveal>
-        <span class="tile tile--chrome" aria-hidden="true"><img src="assets/img/chrome-blob.webp" alt="" width="500" height="500" loading="lazy"></span>
+        <span class="tile tile--logo" aria-hidden="true"><span class="d3">D</span></span>
         <h2 id="cta-title" class="title title--xl"><span class="grad">Пришлите фото детали —</span> <span class="accent">обсудим решение</span></h2>
         <p class="cta__lead">Отвечу, можно ли восстановить деталь, и предложу вариант изготовления.</p>
         <p class="cta__live"><i aria-hidden="true"></i>На связи в MAX и Telegram</p>
@@ -274,6 +263,7 @@
   <div class="toast" role="status" aria-live="polite" data-toast></div>
 
   <script src="assets/js/main.js" defer></script>
-  <script type="module" src="assets/js/scene.js"></script>
+  <script src="assets/vendor/three.min.js" defer></script>
+  <script src="assets/js/scene.js" defer></script>
 </body>
 </html>
